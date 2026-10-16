@@ -308,6 +308,15 @@ else:
         final_label = final_label + " "
         
     print("Label: '" + final_label + "'")
+#Conclusiones
+
+"""El manejo de strings es vital porque casi toda la entrada de usuarios es texto.
+# - Métodos como strip() y lower() son fundamentales para poder comparar datos reales sin fallar.
+# - Normalizar texto antes de la lógica previene que un espacio extra arruine el programa.
+# - Las validaciones tempranas evitan que el código procese basura o marque errores confusos.
+# - Aprender sobre inmutabilidad y slicing (como en [::-1]) hace el código mucho más limpio y eficiente."""
+
+
 """
 Python Software Foundation. (2024). Built-in Types: Text Sequence Type — str. Python 3.12 Documentation. Recuperado de la documentación oficial. (Referencia para métodos de limpieza y partición como .strip(), .split() y .join()).
 
