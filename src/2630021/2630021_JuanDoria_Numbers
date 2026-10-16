@@ -1,0 +1,359 @@
+#Juan Eduaro Doria VIllanueva
+#2630021
+#im-3
+"""
+En Python, 'int' representa números enteros (ej. 5), y 'float' números con decimales (ej. 3.14).
+La principal diferencia es que 'float' permite cálculos exactos en medidas o conversiones.
+Un booleano (True/False) es un valor lógico que actúa como un interruptor de "sí o no",
+y se obtiene al evaluar condiciones o comparaciones matemáticas (ejemplo: temp >= 30.0).
+Validar rangos es vital para rechazar datos imposibles (como temperaturas bajo el cero absoluto),
+y evitar divisiones entre cero es crítico para que el programa no colapse con errores fatales.
+Este documento cubrirá: la descripción de cada problema, el diseño de entradas y salidas,
+las validaciones aplicadas, y el uso de enteros, flotantes y booleanos para tomar decisiones.
+"""
+#PRINCIPIOS Y BUENAS PRÁCTICAS (COMENTARIOS)
+"""
+- Usar tipos apropiados: int para contadores, float para cantidades con decimales.
+- Evitar duplicar expresiones complejas: guardar resultados intermedios en variables.
+- Validar datos antes de operar (por ejemplo, que horas y salarios no sean negativos).
+- Usar nombres de variables descriptivos y mensajes claros para el usuario.
+- Documentar claramente cómo se interpretan los booleanos (qué significa true y qué significa false en cada contexto).
+"""
+
+
+print("Problem 1: Temperature converter and range flag".upper())
+"""Description: Convierte una temperatura de Celsius a Fahrenheit y Kelvin,
+# e indica con un booleano si es una temperatura alta (>= 30.0°C).
+"""
+# Inputs:
+# - temp_c (float o string que pueda convertirse a float)
+#
+# Outputs:
+# - "Fahrenheit: <temp_f>"
+# - "Kelvin: <temp_k>"
+# - "High temperature: true|false"
+#
+# Validations:
+# - Verificar que temp_c pueda convertirse a float.
+# - No permitir temperaturas físicas imposibles (temp_k < 0.0).
+
+temperaturas_prueba = [35.5, 20.0, -300.0]
+
+for temp_c in temperaturas_prueba:
+    print(f"\nInput: {temp_c}°C")
+    
+    temp_k = temp_c + 273.15
+    
+    if temp_k < 0.0:
+        print("Error: invalid input")
+    else:
+        temp_f = temp_c * 9 / 5 + 32
+        
+        print(f"Fahrenheit: {temp_f}")
+        print(f"Kelvin: {temp_k}")
+        
+        # Booleano básico con puro if/else
+        if temp_c >= 30.0:
+            print("High temperature: true")
+        else:
+            print("High temperature: false")
+
+print("Problem 2: Work hours and overtime payment".upper())
+"""Description: Calcula el pago semanal separando horas regulares (hasta 40)
+# y horas extra (pagadas al 150%). Indica con un booleano si se trabajaron extras.
+"""
+# Inputs:
+# - hours_worked (float)
+# - hourly_rate (float)
+#
+# Outputs:
+# - "Regular pay: <regular_pay>"
+# - "Overtime pay: <overtime_pay>"
+# - "Total pay: <total_pay>"
+# - "Has overtime: true|false"
+#
+# Validations:
+# - hours_worked >= 0
+# - hourly_rate > 0
+# - En caso de error mostrar: "Error: invalid input"
+
+horas_prueba = [45.0, 40.0, -5.0]
+pagos_prueba = [100.0, 100.0, 100.0]
+
+for i in range(3):
+    hours_worked = horas_prueba[i]
+    hourly_rate = pagos_prueba[i]
+    
+    print(f"\nInput: Hours={hours_worked}, Rate={hourly_rate}")
+    
+    if hours_worked < 0 or hourly_rate <= 0:
+        print("Error: invalid input")
+    else:
+        # Puros if basicos para separar horas
+        if hours_worked > 40.0:
+            regular_hours = 40.0
+            overtime_hours = hours_worked - 40.0
+            has_overtime = True
+        else:
+            regular_hours = hours_worked
+            overtime_hours = 0.0
+            has_overtime = False
+            
+        regular_pay = regular_hours * hourly_rate
+        overtime_pay = overtime_hours * hourly_rate * 1.5
+        total_pay = regular_pay + overtime_pay
+        
+        print(f"Regular pay: {regular_pay}")
+        print(f"Overtime pay: {overtime_pay}")
+        print(f"Total pay: {total_pay}")
+        
+        if has_overtime == True:
+            print("Has overtime: true")
+        else:
+            print("Has overtime: false")
+        
+print("problem 3: Discount eligibility with booleans")
+"""Description: Determina si un cliente recibe un 10% de descuento basado
+# en su estatus de estudiante, tercera edad, o monto total de compra.
+"""
+# Inputs:
+# - purchase_total (float)
+# - is_student_text (string: "YES" o "NO")
+# - is_senior_text (string: "YES" o "NO")
+#
+# Outputs:
+# - "Discount eligible: true|false"
+# - "Final total: <final_total>"
+#
+# Validations:
+# - purchase_total >= 0.0
+# - Los textos deben ser exactamente "YES" o "NO" tras normalizarse.
+# - Mostrar "Error: invalid input" si algo no cumple.
+compras_prueba = [1200.0, 500.0, 800.0]
+estudiante_prueba = ["NO", "YES", "TAL VEZ"]
+tercera_edad_prueba = ["YES", "NO", "NO"]
+
+for i in range(3):
+    purchase_total = compras_prueba[i]
+    is_student_text = estudiante_prueba[i]
+    is_senior_text = tercera_edad_prueba[i]
+    
+    print(f"\nInput: Total=${purchase_total}, Student={is_student_text}, Senior={is_senior_text}")
+    
+    if purchase_total < 0.0:
+        print("Error: invalid input")
+    else:
+        student_clean = is_student_text.strip().upper()
+        senior_clean = is_senior_text.strip().upper()
+        
+        
+        if (student_clean != "YES" and student_clean != "NO") or (senior_clean != "YES" and senior_clean != "NO"):
+            print("Error: invalid input")
+        else:
+            
+            is_student = False
+            if student_clean == "YES":
+                is_student = True
+                
+            is_senior = False
+            if senior_clean == "YES":
+                is_senior = True
+                
+           
+            discount_eligible = False
+            if is_student == True:
+                discount_eligible = True
+            elif is_senior == True:
+                discount_eligible = True
+            elif purchase_total >= 1000.0:
+                discount_eligible = True
+                
+            if discount_eligible == True:
+                final_total = purchase_total * 0.90
+                print("Discount eligible: true")
+            else:
+                final_total = purchase_total
+                print("Discount eligible: false")
+                
+            print(f"Final total: {final_total}")
+print("Problem 4: Basic statistics of three integers".upper())
+"""Description: Lee tres números enteros y calcula suma, promedio,
+# valor máximo, mínimo y verifica si todos son pares.
+"""
+# Inputs:
+# - n1 (int)
+# - n2 (int)
+# - n3 (int)
+#
+# Outputs:
+# - "Sum: <sum_value>"
+# - "Average: <average_value>"
+# - "Max: <max_value>"
+# - "Min: <min_value>"
+# - "All even: true|false"
+#
+# Validations:
+# - Verificar que los tres valores se puedan convertir a int.
+
+lista_n1 = [2, 10, 3]
+lista_n2 = [4, -5, 5]
+lista_n3 = [6, 7, 7]
+
+for i in range(3):
+    n1 = lista_n1[i]
+    n2 = lista_n2[i]
+    n3 = lista_n3[i]
+    
+    print(f"\nInput: {n1}, {n2}, {n3}")
+    
+    sum_value = n1 + n2 + n3
+    average_value = sum_value / 3.0
+    
+    # Maximo con puro if
+    max_value = n1
+    if n2 > max_value:
+        max_value = n2
+    if n3 > max_value:
+        max_value = n3
+        
+    # Minimo con puro if
+    min_value = n1
+    if n2 < min_value:
+        min_value = n2
+    if n3 < min_value:
+        min_value = n3
+        
+    print(f"Sum: {sum_value}")
+    print(f"Average: {average_value}")
+    print(f"Max: {max_value}")
+    print(f"Min: {min_value}")
+    
+    # Verificar si son pares
+    if n1 % 2 == 0 and n2 % 2 == 0 and n3 % 2 == 0:
+        print("All even: true")
+    else:
+        print("All even: false")
+        
+
+
+basic_statistics(2, 4, 6)
+basic_statistics(10, -5, 7)
+basic_statistics("8", "12", "4")
+basic_statistics("abc", 5, 2)
+print("Problem 5: Loan eligibility (income and debt ratio)".upper())
+"""Description: Determina si una persona es elegible para un préstamo 
+# calculando su nivel de endeudamiento (debt ratio) y evaluando ingresos y crédito.
+"""
+# Inputs:
+# - monthly_income (float)
+# - monthly_debt (float)
+# - credit_score (int)
+#
+# Outputs:
+# - "Debt ratio: <debt_ratio>"
+# - "Eligible: true|false"
+#
+# Validations:
+# - monthly_income > 0.0 (evita división entre cero)
+# - monthly_debt >= 0.0
+# - credit_score >= 0
+def check_loan_eligibility(income_unput, debt_input, score_input):
+    try:
+        money_income = float(income_unput)
+        money_debt = float(debt_input)
+        credit_score = int(score_input)
+    except ValueError:
+        print("Error: invalid input")
+        return
+
+    if money_income < 0.0 or money_debt < 0.0 or credit_score < 0:
+        print("Error: invalid input")
+        return
+
+    debt_ratio = money_debt / money_income if money_income > 0 else float('inf') 
+    elegible = (money_income >= 8000.0 and debt_ratio < 0.4 and credit_score >= 650)
+
+    print(f"debt_ratio: {debt_ratio:.2f}")
+    print(f"eligible: {str(elegible).lower()}")
+    print()
+
+    # Pruebas
+check_loan_eligibility(10000, 3000, 700)  
+check_loan_eligibility(8000, 4000, 680)   
+check_loan_eligibility(7500, 2000, 700)   
+check_loan_eligibility(12000, 2000, 600) 
+check_loan_eligibility(0, 1000, 700)      
+check_loan_eligibility(9000, -500, 700)   
+
+
+print("Problem 6: Body Mass Index (BMI) and category flag".upper())
+"""Description: Calcula el índice de masa corporal (BMI) y utiliza banderas 
+# booleanas para categorizar el resultado como bajo peso, normal o sobrepeso.
+"""
+# Inputs:
+# - weight_kg (float)
+# - height_m (float)
+#
+# Outputs:
+# - "BMI: <bmi>"
+# - "Underweight: true|false"
+# - "Normal: true|false"
+# - "Overweight: true|false"
+#
+# Validations:
+# - weight_kg > 0.0
+# - height_m > 0.0 (esto también previene la división entre cero)
+# - En caso de error mostrar "Error: invalid input"
+
+def calculate_bmi(weight_input, height_input):
+    try:
+        weight_kg = float(weight_input)
+        height_m = float(height_input)
+    except ValueError:
+        print("Error: invalid input")
+        return
+        
+    if weight_kg <= 0.0 or height_m <= 0.0:
+        print("Error: invalid input")
+        return
+        
+    bmi = weight_kg / (height_m * height_m)
+    
+    is_underweight = bmi < 18.5
+    is_normal = 18.5 <= bmi < 25.0
+    is_overweight = bmi >= 25.0
+    
+    print(f"BMI: {bmi:.2f}")
+    print(f"Underweight: {str(is_underweight).lower()}")
+    print(f"Normal: {str(is_normal).lower()}")
+    print(f"Overweight: {str(is_overweight).lower()}")
+    print()
+
+
+# Pruebas
+calculate_bmi(68, 1.75)   
+calculate_bmi(50, 1.70)   
+calculate_bmi(85, 1.80)   
+calculate_bmi(0, 1.75)    
+calculate_bmi(70, -1.5)   
+calculate_bmi("abc", 1.8) 
+
+print("Conclusiones")
+"""
+evidenció cómo los algoritmos traducen reglas de negocio de la vida real diagnósticos de salud) en lógica computacional estricta.
+ La conversión segura de tipos (try/except con int y float) y la validación de rangos son críticos para prevenir errores fatales,
+ como cálculos con datos vacíos o divisiones entre cero. Por su parte, las variables booleanas actuaron como el motor de decisión del código: al evaluar múltiples condiciones matemáticas simultáneas (usando and, or, >=), 
+ permiten que el programa determine rutas de acción exactas sin intervención humana.
+
+"""
+"""
+Python Software Foundation. (2024). Built-in Types: Numeric Types — int, float. Python 3.12 Documentation. (Referencia para la conversión de tipos de datos matemáticos y el uso de .2f para precisión decimal).
+
+Python Software Foundation. (2024). Built-in Types: Boolean Values and Boolean Operations. Python 3.12 Documentation. (Referencia sobre el uso de los operadores lógicos and, or y la evaluación de banderas de estado True/False).
+
+Python Software Foundation. (2024). Errors and Exceptions. Python 3.12 Documentation. (Sustento técnico para el bloque de validación try...except ValueError al convertir entradas de usuario a valores numéricos).
+
+Python Software Foundation. (2024). Built-in Functions: min() and max(). Python 3.12 Documentation. (Referencia para la selección algorítmica de valores máximos y mínimos en los cálculos de horas extra y estadísticas de enteros).
+
+Matthes, E. (2023). Python Crash Course (3ra ed.). No Starch Press. (Capítulo sobre control de flujo, sentencias if-elif-else y operaciones con operadores de módulo % para determinar números pares e impares).
+"""
